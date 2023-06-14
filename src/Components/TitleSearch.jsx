@@ -175,7 +175,7 @@ export default function TitleSearch() {
               style={{ textDecoration: "underline" }}
               onClick={() => setEntityPopupOpen(!entityPopupOpen)}
             >
-              Entity Popup
+              Advanced search
             </Button>
           </Grid>
         </Grid>

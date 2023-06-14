@@ -6,8 +6,15 @@ import {
   DialogTitle,
   DialogContent,
   DialogContentText,
-  DialogActions
+  DialogActions,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
 } from "@mui/material";
+import ArticleIcon from "@mui/icons-material/Article";
+import DatabaseGraph from "./DatabaseGraph";
 
 export default function ResultGraph() {
   const [openEntityPopup, setOpenEntityPopup] = React.useState(false);
@@ -29,8 +36,17 @@ export default function ResultGraph() {
     setOpenLinePopup(false);
   };
 
+  const articleLinks = [
+    "https://www.markiza.sk/soubiz/zahranicny/1891508_dalsieho-znameho-rezisera-obvinuje-z-obtazovania-38-zien",
+    "https://dennikn.sk/1364391/preco-obete-sexualneho-zneuzivania-hovoria-az-po-rokoch-su-ich-vypovede-doveryhodne-vysvetluje-psychologicka/",
+    "https://www.topky.sk/cl/100370/1768819/Dalsi-sexualny-skandal-v-slovenskej-cirkvi--Spoved-z-detstva-o-sexualnom-obtazovani",
+    "https://www.zenyvmeste.sk/mala-som-zakrocit-proti-kolegovi--co-obtazuje",
+    "https://www.topky.sk/cl/11/1776147/Sexualny-skandal-v-Polsku--VIDEO-Znamy-onkolog-mal-obtazovat-pacientky--az-88-obeti"
+  ];
+
   return (
     <Grid>
+      <DatabaseGraph />
       <Button
         color="secondary"
         variant="text"
@@ -62,7 +78,16 @@ export default function ResultGraph() {
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Tu su nejake clanky o danej entite
+            <List>
+              <ListItem disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <ArticleIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={articleLinks[0]} />
+                </ListItemButton>
+              </ListItem>
+            </List>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
