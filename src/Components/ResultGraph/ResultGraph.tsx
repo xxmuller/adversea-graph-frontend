@@ -1,4 +1,5 @@
 import React from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import {
   Button,
   Grid,
@@ -19,6 +20,8 @@ import DatabaseGraph from "./DatabaseGraph";
 export default function ResultGraph() {
   const [openEntityPopup, setOpenEntityPopup] = React.useState(false);
   const [openLinePopup, setOpenLinePopup] = React.useState(false);
+  const searchParams = useSearchParams();
+  const navigate = useNavigate();
 
   const setEntityPopupOpen = () => {
     setOpenEntityPopup(true);
@@ -43,6 +46,14 @@ export default function ResultGraph() {
     "https://www.zenyvmeste.sk/mala-som-zakrocit-proti-kolegovi--co-obtazuje",
     "https://www.topky.sk/cl/11/1776147/Sexualny-skandal-v-Polsku--VIDEO-Znamy-onkolog-mal-obtazovat-pacientky--az-88-obeti"
   ];
+
+  const showSearchResults = () => {
+    navigate(`/results?${searchParams.toString()}`);
+  };
+
+  const showStatistics = () => {
+    navigate(`/stats?${searchParams.toString()}`);
+  };
 
   return (
     <Grid>
@@ -74,11 +85,11 @@ export default function ResultGraph() {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          Toto je Entity Popup
+          We found these articles about: Marián Kočner
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            <List>
+            {/* <List>
               <ListItem disablePadding>
                 <ListItemButton>
                   <ListItemIcon>
@@ -87,13 +98,25 @@ export default function ResultGraph() {
                   <ListItemText primary={articleLinks[0]} />
                 </ListItemButton>
               </ListItem>
+            </List> */}
+            <List>
+              {articleLinks.map((link) => (
+                <ListItem disablePadding component="a" href={link} target="blank">
+                  <ListItemButton>
+                    <ListItemIcon>
+                      <ArticleIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={link} />
+                  </ListItemButton>
+                </ListItem>
+              ))}
             </List>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleEntityPopupClose}>Späť</Button>
-          <Button onClick={handleEntityPopupClose} autoFocus>
-            Všetky články
+          <Button onClick={handleEntityPopupClose}>Back</Button>
+          <Button onClick={showSearchResults} autoFocus>
+            Show all articles
           </Button>
         </DialogActions>
       </Dialog>
@@ -105,20 +128,65 @@ export default function ResultGraph() {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          Toto je Line Popup
+          Entity1 - Entity2 related articles
         </DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Tu su nejake clanky o danom vztahu
-          </DialogContentText>
+          <List>
+            {articleLinks.map((link) => (
+              <ListItem disablePadding component="a" href={link} target="blank">
+                <ListItemButton>
+                  <ListItemIcon>
+                    <ArticleIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={link} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleLinePopupClose}>Späť</Button>
-          <Button onClick={handleLinePopupClose} autoFocus>
-            Všetky články
+          <Button onClick={handleLinePopupClose}>Back</Button>
+          <Button onClick={showSearchResults} autoFocus>
+            Show all articles
           </Button>
         </DialogActions>
       </Dialog>
+
+      <Grid item container justifyContent="center" textAlign="center" spacing={3} marginTop={0} marginBottom={3} columns={16}>
+        <Grid item xs={8}>
+          <Button
+            size="large"
+            color="info"
+            variant="text"
+            onClick={showStatistics}
+            sx={{
+              borderRight: "1px solid",
+              borderRadius: "3",
+              width: "90%"
+            }}
+            style={{ backgroundColor: "rgb(38, 166, 154)" }}
+          >
+            statistics
+          </Button>
+        </Grid>
+
+        <Grid item xs={8}>
+          <Button
+            size="large"
+            color="info"
+            variant="text"
+            onClick={showSearchResults}
+            sx={{
+              borderRadius: "3",
+              width: "90%"
+            }}
+            style={{ backgroundColor: "rgb(38, 166, 154)" }}
+          >
+            articles
+          </Button>
+        </Grid>
+      </Grid>
     </Grid>
+
   );
 }
